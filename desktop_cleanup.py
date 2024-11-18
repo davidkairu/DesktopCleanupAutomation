@@ -168,7 +168,7 @@ def start_cleanup_in_background():
     cleanup_thread.daemon = True
     cleanup_thread.start()
 
-if __name__ == "__main__":
+if  __name__ == "__main__":
     start_cleanup_in_background()
 
     # Keep the script running
