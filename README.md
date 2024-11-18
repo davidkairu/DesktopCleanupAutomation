@@ -1,25 +1,25 @@
 # Desktop Cleanup Automation Script
 
 ## Overview
-This project is a Python automation script designed to keep your desktop clean and organized. It runs periodically in the background, categorizes files into different folders, removes duplicate files, and compresses older files. The goal is to minimize desktop clutter and maintain an organized environment effortlessly.
+This project is a Python automation script designed to keep your desktop and downloads folder clean and organized. It runs periodically in the background, categorizes files into different folders, removes duplicate files, and compresses older files. The goal is to minimize clutter and maintain an organized environment effortlessly.
 
 ## Features
 
 1. **File Categorization**: Automatically categorizes files into folders based on their type (e.g., Documents, Images, Videos).
-2. **Periodic Cleanup**: Runs periodically in the background to ensure continuous desktop organization.
+2. **Periodic Cleanup**: Runs periodically in the background to ensure continuous organization of the desktop and downloads folder.
 3. **Remove Duplicate Files**: Removes duplicate files from categorized folders based on content comparison.
 4. **Compress Older Files**: Compresses files older than a specified threshold to save space.
 5. **Runs in Background**: Uses threading to run continuously without disrupting your workflow.
 
 ## How It Works
-1. The script first **creates category folders** on the desktop, such as Documents, Images, Videos, Music, etc.
-2. Files are then **moved from the desktop** into these respective folders based on their file extensions.
+1. The script first **creates category folders** on the desktop and in the downloads folder, such as Documents, Images, Videos, Music, etc.
+2. Files are then **moved from the desktop and downloads folder** into these respective folders based on their file extensions.
 3. The script **removes duplicate files** within each categorized folder, ensuring only one copy of each unique file is kept.
 4. **Older files** are compressed into ZIP archives to save space.
-5. The entire process runs in a **background thread** and repeats periodically to keep the desktop clutter-free.
+5. The entire process runs in a **background thread** and repeats periodically to keep the desktop and downloads folder clutter-free.
 
 ## Folder Categories
-The following folders are created on the desktop to categorize files:
+The following folders are created on the desktop and in the downloads folder to categorize files:
 - **Documents**: Files with extensions like `.pdf`, `.docx`, `.txt`, `.xlsx`, `.pptx`.
 - **Images**: Files like `.jpg`, `.jpeg`, `.png`, `.gif`.
 - **Videos**: Files like `.mp4`, `.mov`, `.avi`.
@@ -49,7 +49,7 @@ The following folders are created on the desktop to categorize files:
 
 4. **Run the Script**:
    - Open the script in PyCharm or your preferred editor.
-   - Run the script to start the automatic desktop cleanup process.
+   - Run the script to start the automatic cleanup process for the desktop and downloads folder.
 
 5. **(Optional) Set Up on System Startup**:
    - To make the script run automatically at startup, you can use **LaunchAgents** on macOS, **Task Scheduler** on Windows, or **cron jobs** on Linux. Refer to the "Automatic Startup" section below for details.
@@ -125,5 +125,4 @@ Contributions are welcome! Feel free to submit a pull request or report issues t
 
 ## License
 This project is licensed under the MIT License. Feel free to use and modify it as needed.
-
 
