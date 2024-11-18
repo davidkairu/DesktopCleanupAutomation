@@ -10,6 +10,12 @@ from datetime import datetime
 def get_desktop_path():
     return os.path.join(os.path.expanduser("~"), "Desktop")
 
+# Function to get the Downloads folder path
+def get_special_folder_paths():
+    home_path = os.path.expanduser("~")
+    downloads_path = os.path.join(home_path, "Downloads")
+    return downloads_path
+
 # Function to categorize files based on their extension
 def categorize_file(file_name):
     file_categories = {
@@ -31,23 +37,23 @@ def categorize_file(file_name):
     return "Others"
 
 # Function to create category folders
-def create_category_folders(desktop_path):
+def create_category_folders(folder_path):
     categories = ["Documents", "Images", "Videos", "Music", "Archives", "Programs", "Others"]
 
     for category in categories:
-        category_path = os.path.join(desktop_path, category)
+        category_path = os.path.join(folder_path, category)
         if not os.path.exists(category_path):
             os.makedirs(category_path)
-            print(f"{category} folder created")
+            print(f"{category} folder created in {folder_path}")
         else:
-            print(f"{category} folder already exists")
+            print(f"{category} folder already exists in {folder_path}")
 
 # Function to move files to their respective category folders
-def move_files(desktop_path):
-    items = os.listdir(desktop_path)
+def move_files(folder_path):
+    items = os.listdir(folder_path)
 
     for item in items:
-        item_path = os.path.join(desktop_path, item)
+        item_path = os.path.join(folder_path, item)
 
         # Skip directories
         if os.path.isdir(item_path):
@@ -57,7 +63,7 @@ def move_files(desktop_path):
         category = categorize_file(item)
 
         # Determine destination path and move the file
-        destination_folder = os.path.join(desktop_path, category)
+        destination_folder = os.path.join(folder_path, category)
         destination_path = os.path.join(destination_folder, item)
 
         shutil.move(item_path, destination_path)
@@ -133,12 +139,8 @@ def get_file_age_in_days(file_path):
     return file_age
 
 # Function to clean each folder by removing duplicates and compressing older files
-def clean_folders(desktop_path):
-    categories = ["Documents", "Images", "Videos", "Music", "Archives", "Programs", "Others"]
-
-    for category in categories:
-        folder_path = os.path.join(desktop_path, category)
-
+def clean_folders(folder_paths):
+    for folder_path in folder_paths:
         if os.path.exists(folder_path):
             # Step 1: Remove duplicate files in the folder
             remove_duplicates(folder_path)
@@ -147,19 +149,22 @@ def clean_folders(desktop_path):
             compress_old_files_in_folder(folder_path)
 
 # Function to run cleanup periodically
-def run_cleanup_periodically(desktop_path, interval=600):
+def run_cleanup_periodically(folder_paths, interval=60):
     while True:
         print("\nStarting desktop cleanup...")
-        create_category_folders(desktop_path)
-        move_files(desktop_path)
-        clean_folders(desktop_path)
+        for folder_path in folder_paths:
+            create_category_folders(folder_path)
+            move_files(folder_path)
+        clean_folders(folder_paths)
         print("Desktop cleanup complete! Waiting for next cycle")
         time.sleep(interval)
 
 # Start the cleanup in the background
 def start_cleanup_in_background():
     desktop_path = get_desktop_path()
-    cleanup_thread = threading.Thread(target=run_cleanup_periodically, args=(desktop_path,))
+    downloads_path = get_special_folder_paths()
+    folder_paths = [desktop_path, downloads_path]
+    cleanup_thread = threading.Thread(target=run_cleanup_periodically, args=(folder_paths,))
     cleanup_thread.daemon = True
     cleanup_thread.start()
 
