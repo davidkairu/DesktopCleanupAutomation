@@ -149,7 +149,7 @@ def clean_folders(folder_paths):
             compress_old_files_in_folder(folder_path)
 
 # Function to run cleanup periodically
-def run_cleanup_periodically(folder_paths, interval=60):
+def run_cleanup_periodically(folder_paths, interval=(60*60*4)):
     while True:
         print("\nStarting desktop cleanup...")
         for folder_path in folder_paths:
